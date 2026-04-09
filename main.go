@@ -1,7 +1,14 @@
 package main
 
-import "github.com/Alonza0314/nsctl/cmd"
+import (
+	"runtime"
+
+	"github.com/Alonza0314/nsctl/cmd"
+)
 
 func main() {
+	runtime.LockOSThread()
+	defer runtime.UnlockOSThread()
+
 	cmd.Execute()
 }
