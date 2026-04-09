@@ -1,7 +1,7 @@
 package main
 
-import "fmt"
+import "github.com/Alonza0314/nsctl/cmd"
 
 func main() {
-	fmt.Println("nsctl!")
+	cmd.Execute()
 }
