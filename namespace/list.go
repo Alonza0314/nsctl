@@ -7,16 +7,9 @@ import (
 )
 
 func List() error {
-	nsFile, err := os.ReadDir("/var/run/netns")
+	nsList, err := getNsList()
 	if err != nil {
-		return fmt.Errorf("failed to list ns: %v", err)
-	}
-
-	nsList := make([]string, 0)
-	for _, ns := range nsFile {
-		if strings.HasPrefix(ns.Name(), NS_PREFIX) {
-			nsList = append(nsList, ns.Name()[len(NS_PREFIX):])
-		}
+		return err
 	}
 
 	if len(nsList) != 0 {
@@ -31,4 +24,20 @@ func List() error {
 
 	fmt.Printf("Total: %d namespaces\n", len(nsList))
 	return nil
+}
+
+func getNsList() ([]string, error) {
+	nsFile, err := os.ReadDir("/var/run/netns")
+	if err != nil {
+		return nil, fmt.Errorf("failed to get list ns: %v", err)
+	}
+
+	nsList := make([]string, 0)
+	for _, ns := range nsFile {
+		if strings.HasPrefix(ns.Name(), NS_PREFIX) {
+			nsList = append(nsList, ns.Name()[len(NS_PREFIX):])
+		}
+	}
+
+	return nsList, nil
 }

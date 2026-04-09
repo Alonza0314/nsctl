@@ -20,15 +20,21 @@ func init() {
 func nsFunc(cmd *cobra.Command, args []string) {
 	if len(args) == 0 {
 		errEmptyAction()
-		return
 	}
 
 	switch args[0] {
 	case "create":
+		if len(args) != 2 {
+			errFormat(args)
+		} else {
+			if err := namespace.Create(args[1]); err != nil {
+				errPrint(err)
+			}
+		}
 	case "delete":
 	case "list":
 		if err := namespace.List(); err != nil {
-			errSystemError(err)
+			errPrint(err)
 		}
 	default:
 		errInvalidAction(args[0])
