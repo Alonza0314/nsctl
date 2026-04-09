@@ -10,3 +10,43 @@
 </p>
 
 `nsctl` is a CLI tool for building your own network topology with pure Linux namespaces — no containers, no overhead, full control.
+
+## Command Description
+
+- `ns` series
+
+    | Command                  | Description            |
+    | ------------------------ | ---------------------- |
+    | `nsctl ns create <name>` | Create a new namespace |
+    | `nsctl ns delete <name>` | Delete a namespace     |
+    | `nsctl ns list`          | List all namespaces    |
+
+- `net` series
+
+    | Command                            | Description                    |
+    | ---------------------------------- | ------------------------------ |
+    | `nsctl net connect <ns1> <ns2>`    | Connect two namespaces         |
+    | `nsctl net disconnect <ns1> <ns2>` | Disconnect two namespaces      |
+    | `nsctl net list <ns>`              | List interfaces in a namespace |
+    | `nsctl net set-ip <ns> <if> <ip>`  | Set IP address of an interface |
+    | `nsctl net up <ns> <if>`           | Bring an interface up          |
+    | `nsctl net down <ns> <if>`         | Bring an interface down        |
+
+- `exec` series
+
+    | Command                    | Description                      |
+    | -------------------------- | -------------------------------- |
+    | `nsctl exec <ns> -- <cmd>` | Execute a command in a namespace |
+
+- `describe` series
+
+    | Command               | Description          |
+    | --------------------- | -------------------- |
+    | `nsctl describe <ns>` | Describe a namespace |
+
+- `topo` series
+
+    | Command                    | Description                   |
+    | -------------------------- | ----------------------------- |
+    | `nsctl topo apply <file>`  | Apply a topology from a file  |
+    | `nsctl topo delete <file>` | Delete a topology from a file |
