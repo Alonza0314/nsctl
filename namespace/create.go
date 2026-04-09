@@ -38,5 +38,10 @@ func Create(name string) error {
 		}
 	}()
 
+	if err := netns.Set(originNs); err != nil {
+		return fmt.Errorf("failed to re-set to origin ns: %v", err)
+	}
+
+	fmt.Printf("Namespace %s created successfully\n", name)
 	return nil
 }
