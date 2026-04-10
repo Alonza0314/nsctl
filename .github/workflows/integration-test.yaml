@@ -10,6 +10,10 @@ on:
 jobs:
   integration-test:
     runs-on: ubuntu-latest
+    container:
+      image: ubuntu
+      options: --privileged
+
     strategy:
       matrix:
         go: [ '1.25.5' ]
