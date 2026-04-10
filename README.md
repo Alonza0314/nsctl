@@ -11,6 +11,26 @@
 
 `nsctl` is a CLI tool for building your own network topology with pure Linux namespaces — no containers, no overhead, full control.
 
+## Develop Environment
+
+| Environment | Value                |
+|-------------|----------------------|
+| OS          | Ubuntu 25.04         |
+| Go          | go1.25.5 linux/amd64 |
+| Golint      | v2.7.2               |
+
+## Usage
+
+### Manual Build
+
+```bash
+git clone https://github.com/Alonza0314/nsctl.git
+cd nsctl
+make
+```
+
+After built, the binary file, `nsctl`, will be placed in the `build` directory.
+
 ## Command Description
 
 - `ns` series
