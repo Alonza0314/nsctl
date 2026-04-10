@@ -6,24 +6,25 @@ import (
 	"strings"
 )
 
-func List() error {
+func List() (string, error) {
 	nsList, err := getNsList()
 	if err != nil {
-		return err
+		return "", err
 	}
 
+	var strBuilder strings.Builder
+
 	if len(nsList) != 0 {
-		var strBuilder strings.Builder
 		strBuilder.WriteString("Namespace List:\n")
 		for _, ns := range nsList {
 			fmt.Fprintf(&strBuilder, "- %s\n", ns)
 		}
 
-		fmt.Println(strBuilder.String())
+		fmt.Fprintf(&strBuilder, "\n")
 	}
 
-	fmt.Printf("Total: %d namespaces\n", len(nsList))
-	return nil
+	fmt.Fprintf(&strBuilder, "Total: %d namespaces\n", len(nsList))
+	return strBuilder.String(), nil
 }
 
 func getNsList() ([]string, error) {
