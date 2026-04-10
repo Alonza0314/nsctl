@@ -1,163 +1,86 @@
 #!/bin/bash
 
+diff() {
+    if [ "$2" != "$3" ]; then
+        echo "[-] $1 test failed"
+        echo "Expected:"
+        echo "$3"
+        echo "Got:"
+        echo "$2"
+        exit 1
+    fi
+
+    echo "[+] $1 test passed"
+}
+
 empty_list() {
     output=$(../nsctl ns list)
     expect=$(cat empty_list.txt)
 
-    if [ "$output" != "$expect" ]; then
-        echo "[-] Empty list test failed"
-        echo "Expected:"
-        echo "$expect"
-        echo "Got:"
-        echo "$output"
-        exit 1
-    fi
-
-    echo "[+] Empty list test passed"
+    diff "Empty list" "$output" "$expect"
 }
 
 create_test-1() {
     output=$(../nsctl ns create test-1)
     expect=$(cat create_test-1.txt)
 
-    if [ "$output" != "$expect" ]; then
-        echo "[-] Create test-1 failed"
-        echo "Expected:"
-        echo "$expect"
-        echo "Got:"
-        echo "$output"
-        exit 1
-    fi
-
-    echo "[+] Create test-1 passed"
+    diff "Create test-1" "$output" "$expect"
 }
 
 list_test-1() {
     output=$(../nsctl ns list)
     expect=$(cat list_test-1.txt)
 
-    if [ "$output" != "$expect" ]; then
-        echo "[-] List test-1 failed"
-        echo "Expected:"
-        echo "$expect"
-        echo "Got:"
-        echo "$output"
-        exit 1
-    fi
-
-    echo "[+] List test-1 passed"
+    diff "List test-1" "$output" "$expect"
 }
 
 create_test-2() {
     output=$(../nsctl ns create test-2)
     expect=$(cat create_test-2.txt)
 
-    if [ "$output" != "$expect" ]; then
-        echo "[-] Create test-2 failed"
-        echo "Expected:"
-        echo "$expect"
-        echo "Got:"
-        echo "$output"
-        exit 1
-    fi
-
-    echo "[+] Create test-2 passed"
+    diff "Create test-2" "$output" "$expect"
 }
 
 list_test-1-2() {
     output=$(../nsctl ns list)
     expect=$(cat list_test-1-2.txt)
 
-    if [ "$output" != "$expect" ]; then
-        echo "[-] List test-1-2 failed"
-        echo "Expected:"
-        echo "$expect"
-        echo "Got:"
-        echo "$output"
-        exit 1
-    fi
-
-    echo "[+] List test-1-2 passed"
+    diff "List test-1-2" "$output" "$expect"
 }
 
 delete_test-1() {
     output=$(../nsctl ns delete test-1)
     expect=$(cat delete_test-1.txt)
 
-    if [ "$output" != "$expect" ]; then
-        echo "[-] Delete test-1 failed"
-        echo "Expected:"
-        echo "$expect"
-        echo "Got:"
-        echo "$output"
-        exit 1
-    fi
-
-    echo "[+] Delete test-1 passed"
+    diff "Delete test-1" "$output" "$expect"
 }
 
 delete_test-1_error() {
     output=$(../nsctl ns delete test-1)
     expect=$(cat delete_test-1_error.txt)
 
-    if [ "$output" != "$expect" ]; then
-        echo "[-] Delete test-1_error failed"
-        echo "Expected:"
-        echo "$expect"
-        echo "Got:"
-        echo "$output"
-        exit 1
-    fi
-
-    echo "[+] Delete test-1_error passed"
+    diff "Delete test-1_error" "$output" "$expect"
 }
 
 create_test-2_error() {
     output=$(../nsctl ns create test-2)
     expect=$(cat create_test-2_error.txt)
 
-    if [ "$output" != "$expect" ]; then
-        echo "[-] Create test-2_error failed"
-        echo "Expected:"
-        echo "$expect"
-        echo "Got:"
-        echo "$output"
-        exit 1
-    fi
-
-    echo "[+] Create test-2_error passed"
+    diff "Create test-2_error" "$output" "$expect"
 }
 
 list_test-2() {
     output=$(../nsctl ns list)
     expect=$(cat list_test-2.txt)
 
-    if [ "$output" != "$expect" ]; then
-        echo "[-] List test-2 failed"
-        echo "Expected:"
-        echo "$expect"
-        echo "Got:"
-        echo "$output"
-        exit 1
-    fi
-
-    echo "[+] List test-2 passed"
+    diff "List test-2" "$output" "$expect"
 }
 
 delete_test-2() {
     output=$(../nsctl ns delete test-2)
     expect=$(cat delete_test-2.txt)
 
-    if [ "$output" != "$expect" ]; then
-        echo "[-] Delete test-2 failed"
-        echo "Expected:"
-        echo "$expect"
-        echo "Got:"
-        echo "$output"
-        exit 1
-    fi
-
-    echo "[+] Delete test-2 passed"
+    diff "Delete test-2" "$output" "$expect"
 }
 
 main() {
