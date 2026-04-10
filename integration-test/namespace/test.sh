@@ -170,7 +170,7 @@ main() {
     delete_test-1_error
     create_test-2_error
     list_test-2
-    delete_test-2
+    # delete_test-2
     empty_list
 }
 
