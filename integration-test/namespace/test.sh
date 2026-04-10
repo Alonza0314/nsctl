@@ -7,7 +7,7 @@ empty_list() {
     if [ "$output" != "$expect" ]; then
         echo "[-] Empty list test failed"
         echo "Expected:"
-        echo "$expected"
+        echo "$expect"
         echo "Got:"
         echo "$output"
         exit 1
@@ -170,7 +170,7 @@ main() {
     delete_test-1_error
     create_test-2_error
     list_test-2
-    # delete_test-2
+    delete_test-2
     empty_list
 }
 
