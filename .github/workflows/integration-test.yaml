@@ -30,7 +30,8 @@ jobs:
       - name: Install dependencies
         run: |
           apt-get update
-          apt-get install -y make build-essential
+          apt-get install -y make build-essential ca-certificates
+          update-ca-certificates
 
       - name: Make
         run: make
