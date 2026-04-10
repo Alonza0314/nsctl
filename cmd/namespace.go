@@ -46,8 +46,10 @@ func nsFunc(cmd *cobra.Command, args []string) {
 			}
 		}
 	case "list":
-		if err := namespace.List(); err != nil {
+		if list, err := namespace.List(); err != nil {
 			errPrint(err)
+		} else {
+			fmt.Print(list)
 		}
 	default:
 		errInvalidAction(args[0])
