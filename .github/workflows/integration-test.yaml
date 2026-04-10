@@ -1,0 +1,33 @@
+name: Integraton Test
+
+on:
+  push:
+    branches: [ "main"]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  integration-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go: [ '1.25.5' ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ matrix.go }}
+
+      - name: Make
+        run: make
+
+      - name: Copy Bin to Integration Test Directory
+        run: cp build/nsctl integration-test/nsctl
+
+      - name: Namespace Test
+        run: cd integration-test/namespace && ./test.sh

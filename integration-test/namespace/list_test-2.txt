@@ -1,0 +1,4 @@
+Namespace List:
+- test-2
+
+Total: 1 namespaces
