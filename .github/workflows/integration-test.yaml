@@ -27,6 +27,11 @@ jobs:
         with:
           go-version: ${{ matrix.go }}
 
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get install -y make build-essential
+
       - name: Make
         run: make
 
