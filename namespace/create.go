@@ -42,6 +42,5 @@ func Create(name string) error {
 		return fmt.Errorf("failed to re-set to origin ns: %v", err)
 	}
 
-	fmt.Printf("Namespace %s created successfully\n", name)
 	return nil
 }
