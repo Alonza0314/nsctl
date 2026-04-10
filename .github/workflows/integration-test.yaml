@@ -1,0 +1,49 @@
+name: Integraton Test
+
+on:
+  push:
+    branches: [ "main"]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  integration-test:
+    runs-on: ubuntu-latest
+    container:
+      image: ubuntu
+      options: --privileged
+
+    strategy:
+      matrix:
+        go: [ '1.25.5' ]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ matrix.go }}
+
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get install -y make build-essential ca-certificates
+          update-ca-certificates
+
+      - name: Make
+        run: make
+
+      - name: Copy Bin to Integration Test Directory
+        run: cp build/nsctl integration-test/nsctl
+
+      - name: Add netns Folder
+        run: mkdir -p /var/run/netns
+
+      - name: Namespace Test
+        run: cd integration-test/namespace && ./test.sh
+
+      - name: Remove netns Folder
+        run: rm -rf /var/run/netns
