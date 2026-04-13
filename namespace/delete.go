@@ -24,7 +24,7 @@ func Delete(name string) error {
 		return fmt.Errorf("namespace %s not found", name)
 	}
 
-	if err := netns.DeleteNamed(NS_PREFIX + name); err != nil {
+	if err := netns.DeleteNamed(GetNsName(name)); err != nil {
 		return fmt.Errorf("failed to delete ns: %v", err)
 	}
 

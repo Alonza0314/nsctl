@@ -28,7 +28,7 @@ func Create(name string) error {
 		}
 	}()
 
-	newNs, err := netns.NewNamed(NS_PREFIX + name)
+	newNs, err := netns.NewNamed(GetNsName(name))
 	if err != nil {
 		return fmt.Errorf("failed to create new ns: %v", err)
 	}

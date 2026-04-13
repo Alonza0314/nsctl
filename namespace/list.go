@@ -42,3 +42,18 @@ func getNsList() ([]string, error) {
 
 	return nsList, nil
 }
+
+func GetNs(nsTarget string) (bool, error) {
+	list, err := getNsList()
+	if err != nil {
+		return false, err
+	}
+
+	for _, ns := range list {
+		if nsTarget == ns {
+			return true, nil
+		}
+	}
+
+	return false, err
+}
