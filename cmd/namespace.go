@@ -8,7 +8,7 @@ import (
 )
 
 var nsCmd = &cobra.Command{
-	Use:                   "ns <create|delete|list> [namespace]",
+	Use:                   "ns <create|delete|list> [args]",
 	Short:                 "Manage network namespaces",
 	Long:                  "Manage network namespaces",
 	DisableFlagsInUseLine: true,
