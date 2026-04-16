@@ -15,18 +15,11 @@ func Create(name string) error {
 		return fmt.Errorf("namespace %s already exists", name)
 	}
 
-	originNs, err := netns.Get()
+	_, originCloseFunc, err := GetOriginNs()
 	if err != nil {
-		return fmt.Errorf("failed to get origin ns: %v", err)
+		return err
 	}
-	defer func() {
-		if err := netns.Set(originNs); err != nil {
-			fmt.Printf("failed to re-set to origin ns: %v", err)
-		}
-		if err := originNs.Close(); err != nil {
-			fmt.Printf("failed to close origin ns: %v\n", err)
-		}
-	}()
+	defer originCloseFunc()
 
 	newNs, err := netns.NewNamed(GetNsName(name))
 	if err != nil {

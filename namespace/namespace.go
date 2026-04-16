@@ -51,3 +51,21 @@ func GetNsFd(ns string) (netns.NsHandle, func(), error) {
 
 	return nsFd, closeFunc, nil
 }
+
+func GetOriginNs() (netns.NsHandle, func(), error) {
+	originNs, err := netns.Get()
+	if err != nil {
+		return -1, nil, fmt.Errorf("failed to get origin ns: %v", err)
+	}
+
+	closeFunc := func() {
+		if err := netns.Set(originNs); err != nil {
+			fmt.Printf("failed to re-set to origin ns: %v", err)
+		}
+		if err := originNs.Close(); err != nil {
+			fmt.Printf("failed to close origin ns: %v\n", err)
+		}
+	}
+
+	return originNs, closeFunc, nil
+}
