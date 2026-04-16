@@ -31,6 +31,13 @@ connect_test() {
     diff "Connect test" "$output" "$expect"
 }
 
+connect_test_error() {
+    output=$(../nsctl net connect test-1 test-2)
+    expect=$(cat connect_test_error.txt)
+
+    diff "Connect test error" "$output" "$expect"
+}
+
 disconnect_test() {
     output=$(../nsctl net disconnect test-1 test-2)
     expect=$(cat disconnect_test.txt)
@@ -42,6 +49,7 @@ main() {
     setup_two_namespace
 
     connect_test
+    connect_test_error
     disconnect_test
 
     cleanup_two_namespace

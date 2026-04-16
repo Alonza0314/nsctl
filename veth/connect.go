@@ -42,9 +42,15 @@ func Connect(ns1, ns2 string) error {
 	}
 
 	if err := netlink.LinkSetNsFd(link1, int(ns1Fd)); err != nil {
+		if err := netlink.LinkDel(link1); err !=  nil {
+			fmt.Printf("failed to delete link %s, please use 'ip link' to check\n", vethName1)
+		}
 		return fmt.Errorf("failed to move %s to %s: %v", vethName1, ns1, err)
 	}
 	if err := netlink.LinkSetNsFd(link2, int(ns2Fd)); err != nil {
+		if err := netlink.LinkDel(link2); err !=  nil {
+			fmt.Printf("failed to delete link %s, please use 'ip link' to check\n", vethName2)
+		}
 		return fmt.Errorf("failed to move %s to %s: %v", vethName2, ns2, err)
 	}
 

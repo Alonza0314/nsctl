@@ -34,10 +34,7 @@ jobs:
           update-ca-certificates
 
       - name: Make
-        run: make
-
-      - name: Copy Bin to Integration Test Directory
-        run: cp build/nsctl integration-test/nsctl
+        run: make test
 
       - name: Add netns Folder
         run: mkdir -p /var/run/netns
