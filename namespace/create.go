@@ -20,6 +20,9 @@ func Create(name string) error {
 		return fmt.Errorf("failed to get origin ns: %v", err)
 	}
 	defer func() {
+		if err := netns.Set(originNs); err != nil {
+			fmt.Printf("failed to re-set to origin ns: %v", err)
+		}
 		if err := originNs.Close(); err != nil {
 			fmt.Printf("failed to close origin ns: %v\n", err)
 		}
@@ -34,10 +37,6 @@ func Create(name string) error {
 			fmt.Printf("failed to close new ns: %v\n", err)
 		}
 	}()
-
-	if err := netns.Set(originNs); err != nil {
-		return fmt.Errorf("failed to re-set to origin ns: %v", err)
-	}
 
 	return nil
 }

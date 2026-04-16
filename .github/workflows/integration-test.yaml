@@ -45,8 +45,8 @@ jobs:
       - name: Namespace Test
         run: cd integration-test/namespace && ./test.sh
 
-      # - name: Veth Net Test
-      #   run: cd integration-test/veth && ./test.sh
+      - name: Veth Net Test
+        run: cd integration-test/veth && ./test.sh
 
       - name: Remove netns Folder
         run: rm -rf /var/run/netns
