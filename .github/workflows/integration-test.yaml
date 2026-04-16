@@ -11,7 +11,7 @@ jobs:
   integration-test:
     runs-on: ubuntu-latest
     container:
-      image: ubuntu
+      image: alonza0314/nsctl-test:latest
       options: --privileged
 
     strategy:
@@ -26,12 +26,6 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: ${{ matrix.go }}
-
-      - name: Install dependencies
-        run: |
-          apt-get update
-          apt-get install -y make build-essential ca-certificates
-          update-ca-certificates
 
       - name: Make
         run: make test
