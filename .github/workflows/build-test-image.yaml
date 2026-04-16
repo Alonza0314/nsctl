@@ -1,7 +1,5 @@
 name: Build nsctl Test Env Image
 on:
-  pull_request:
-    branches: [ "main" ]
   workflow_dispatch:
 
 env:
