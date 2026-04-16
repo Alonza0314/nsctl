@@ -33,6 +33,20 @@ list_test_1_lo() {
     diff "List test 1 lo" "$output" "$expect"
 }
 
+setIp_test_1_lo() {
+    output=$(../nsctl net set-ip test-1 lo 127.0.0.1/16)
+    expect=$(cat setIp_test_1_lo.txt)
+
+    diff "Set IP test 1 lo" "$output" "$expect"
+}
+
+list_test_1_lo_127() {
+    output=$(../nsctl net list test-1)
+    expect=$(cat list_test_1_lo_127.txt)
+
+    diff "List test 1 lo 127" "$output" "$expect"
+}
+
 connect_test() {
     output=$(../nsctl net connect test-1 test-2)
     expect=$(cat connect_test.txt)
@@ -58,10 +72,12 @@ main() {
     setup_two_namespace
 
     list_test_1_lo
+    setIp_test_1_lo
+    list_test_1_lo_127
     connect_test
     connect_test_error
     disconnect_test
-    list_test_1_lo
+    list_test_1_lo_127
 
     cleanup_two_namespace
 }

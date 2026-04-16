@@ -56,6 +56,15 @@ func netFunc(cmd *cobra.Command, args []string) {
 			}
 		}
 	case "set-ip":
+		if len(args) != 4 {
+			errFormat(args)
+		} else {
+			if err := veth.SetIp(args[1], args[2], args[3]); err != nil {
+				errPrint(err)
+			} else {
+				fmt.Printf("Interface %s in namespace %s set IP with %s successfully\n", args[2], args[1], args[3])
+			}
+		}
 	case "up":
 	case "down:":
 	default:
