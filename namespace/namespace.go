@@ -1,6 +1,10 @@
 package namespace
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/vishvananda/netns"
+)
 
 const (
 	NS_PREFIX = "nsctl-"
@@ -23,4 +27,27 @@ func GetNs(nsTarget string) (bool, error) {
 	}
 
 	return false, nil
+}
+
+func GetNsFd(ns string) (netns.NsHandle, func(), error) {
+	found, err := GetNs(ns)
+	if err != nil {
+		return -1, nil, err
+	}
+	if !found {
+		return -1, nil, fmt.Errorf("namespace %s is not found", ns)
+	}
+
+	nsFd, err := netns.GetFromName(GetNsName(ns))
+	if err != nil {
+		return -1, nil, fmt.Errorf("get namespace %s failed: %v", ns, err)
+	}
+
+	closeFunc := func() {
+		if err := nsFd.Close(); err != nil {
+			fmt.Printf("failed to close %s file descriptor\n", ns)
+		}
+	}
+
+	return nsFd, closeFunc, nil
 }
