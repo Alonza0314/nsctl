@@ -7,13 +7,10 @@ import (
 )
 
 func Create(name string) error {
-	nsList, err := getNsList()
-	if err != nil {
+	if found, err := GetNs(name); err != nil {
 		return err
-	}
-
-	for _, ns := range nsList {
-		if ns == name {
+	} else {
+		if found {
 			return fmt.Errorf("namespace %s already exists", name)
 		}
 	}
