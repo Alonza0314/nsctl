@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 LATEST_TAG="latest"
 IMAGE_NAME="alonza0314/nsctl-test"

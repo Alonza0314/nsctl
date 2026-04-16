@@ -27,4 +27,6 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push Docker image
-        run: ./integration-test/test-env-image/image.sh
+        run: |
+          cd ./integration-test/test-env-image
+          ./image.sh
