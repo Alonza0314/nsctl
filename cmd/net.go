@@ -69,13 +69,22 @@ func netFunc(cmd *cobra.Command, args []string) {
 		if len(args) != 3 {
 			errFormat(args)
 		} else {
-			if err := veth.Up(args[1], args[2]); err != nil {
+			if err := veth.UpDown(args[1], args[2], true); err != nil {
 				errPrint(err)
 			} else {
 				fmt.Printf("Interface %s in namespace %s set up successfully\n", args[2], args[1])
 			}
 		}
-	case "down:":
+	case "down":
+		if len(args) != 3 {
+			errFormat(args)
+		} else {
+			if err := veth.UpDown(args[1], args[2], false); err != nil {
+				errPrint(err)
+			} else {
+				fmt.Printf("Interface %s in namespace %s set down successfully\n", args[2], args[1])
+			}
+		}
 	default:
 		errInvalidAction(args[0])
 	}

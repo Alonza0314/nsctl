@@ -61,6 +61,20 @@ list_test_1_lo_127_up() {
     diff "List test 1 lo 127 up" "$output" "$expect"
 }
 
+down_test_1_lo() {
+    output=$(../nsctl net down test-1 lo)
+    expect=$(cat down_test_1_lo.txt)
+
+    diff "Down test 1 lo" "$output" "$expect"
+}
+
+list_test_1_lo_127_down() {
+    output=$(../nsctl net list test-1)
+    expect=$(cat list_test_1_lo_127_down.txt)
+
+    diff "List test 1 lo 127 down" "$output" "$expect"
+}
+
 connect_test() {
     output=$(../nsctl net connect test-1 test-2)
     expect=$(cat connect_test.txt)
@@ -90,10 +104,12 @@ main() {
     list_test_1_lo_127
     up_test_1_lo
     list_test_1_lo_127_up
+    down_test_1_lo
+    list_test_1_lo_127_down
     connect_test
     connect_test_error
     disconnect_test
-    list_test_1_lo_127_up
+    list_test_1_lo_127_down
 
     cleanup_two_namespace
 }

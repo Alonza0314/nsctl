@@ -8,7 +8,7 @@ import (
 	"github.com/vishvananda/netns"
 )
 
-func Up(ns, ifName string) error {
+func UpDown(ns, ifName string, isUp bool) error {
 	_, originCloseFunc, err := namespace.GetOriginNs()
 	if err != nil {
 		return err
@@ -30,8 +30,15 @@ func Up(ns, ifName string) error {
 		return fmt.Errorf("failed to get link %s in namespace %s: %v", ifName, ns, err)
 	}
 
-	if err := netlink.LinkSetUp(link); err != nil {
-		return fmt.Errorf("failed to set link %s up in namespace %s: %v", ifName, ns, err)
+	if isUp {
+		if err := netlink.LinkSetUp(link); err != nil {
+			return fmt.Errorf("failed to set link %s up in namespace %s: %v", ifName, ns, err)
+		}
+	} else {
+		if err := netlink.LinkSetDown(link); err != nil {
+			return fmt.Errorf("failed to set link %s down in namespace %s: %v", ifName, ns, err)
+		}
+
 	}
 
 	return nil
