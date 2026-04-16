@@ -46,15 +46,15 @@ func netFunc(cmd *cobra.Command, args []string) {
 			}
 		}
 	case "list":
-		if len(args) != 2 {
-			errFormat(args)
-		} else {
-			if list, err := veth.List(); err != nil {
-				errPrint(err)
-			} else {
-				fmt.Print(list)
-			}
-		}
+		// if len(args) != 2 {
+		// 	errFormat(args)
+		// } else {
+		// 	if list, err := veth.List(); err != nil {
+		// 		errPrint(err)
+		// 	} else {
+		// 		fmt.Print(list)
+		// 	}
+		// }
 	case "set-ip":
 	case "up":
 	case "down:":
