@@ -1,0 +1,1 @@
+Interface lo in namespace test-1 set IP with 127.0.0.2/8 successfully

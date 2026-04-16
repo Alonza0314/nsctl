@@ -11,7 +11,7 @@ jobs:
   integration-test:
     runs-on: ubuntu-latest
     container:
-      image: ubuntu
+      image: alonza0314/nsctl-test:latest
       options: --privileged
 
     strategy:
@@ -27,23 +27,17 @@ jobs:
         with:
           go-version: ${{ matrix.go }}
 
-      - name: Install dependencies
-        run: |
-          apt-get update
-          apt-get install -y make build-essential ca-certificates
-          update-ca-certificates
-
       - name: Make
-        run: make
-
-      - name: Copy Bin to Integration Test Directory
-        run: cp build/nsctl integration-test/nsctl
+        run: make test
 
       - name: Add netns Folder
         run: mkdir -p /var/run/netns
 
       - name: Namespace Test
         run: cd integration-test/namespace && ./test.sh
+
+      - name: Veth Net Test
+        run: cd integration-test/veth && ./test.sh
 
       - name: Remove netns Folder
         run: rm -rf /var/run/netns

@@ -7,24 +7,15 @@ import (
 )
 
 func Delete(name string) error {
-	nsList, err := getNsList()
+	found, err := GetNs(name)
 	if err != nil {
 		return err
 	}
-
-	found := false
-	for _, ns := range nsList {
-		if ns == name {
-			found = true
-			break
-		}
-	}
-
 	if !found {
 		return fmt.Errorf("namespace %s not found", name)
 	}
 
-	if err := netns.DeleteNamed(NS_PREFIX + name); err != nil {
+	if err := netns.DeleteNamed(GetNsName(name)); err != nil {
 		return fmt.Errorf("failed to delete ns: %v", err)
 	}
 

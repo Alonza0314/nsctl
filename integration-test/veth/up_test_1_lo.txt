@@ -1,0 +1,1 @@
+Interface lo in namespace test-1 set up successfully
