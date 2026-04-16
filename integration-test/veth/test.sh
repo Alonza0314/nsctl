@@ -26,6 +26,13 @@ cleanup_two_namespace() {
     ../nsctl ns delete test-2
 }
 
+list_test_1_lo() {
+    output=$(../nsctl net list test-1)
+    expect=$(cat list_test_1_lo.txt)
+
+    diff "List test 1 lo" "$output" "$expect"
+}
+
 connect_test() {
     output=$(../nsctl net connect test-1 test-2)
     expect=$(cat connect_test.txt)
@@ -50,6 +57,7 @@ disconnect_test() {
 main() {
     setup_two_namespace
 
+    list_test_1_lo
     connect_test
     connect_test_error
     disconnect_test
