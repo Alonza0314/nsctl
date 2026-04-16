@@ -29,16 +29,16 @@ func Connect(ns1, ns2 string) error {
 	}
 
 	if err := netlink.LinkAdd(vethLink); err != nil {
-		return fmt.Errorf("failed to create %s and %s: %v\n", vethName1, vethName2, err)
+		return fmt.Errorf("failed to create %s and %s: %v", vethName1, vethName2, err)
 	}
 
 	link1, err := netlink.LinkByName(vethName1)
 	if err != nil {
-		return fmt.Errorf("failed to get link %s: %v\n", vethName1, err)
+		return fmt.Errorf("failed to get link %s: %v", vethName1, err)
 	}
 	link2, err := netlink.LinkByName(vethName2)
 	if err != nil {
-		return fmt.Errorf("failed get link %s: %v\n", vethName2, err)
+		return fmt.Errorf("failed get link %s: %v", vethName2, err)
 	}
 
 	if err := netlink.LinkSetNsFd(link1, int(ns1Fd)); err != nil {
