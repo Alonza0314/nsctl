@@ -61,6 +61,7 @@ main() {
     connect_test
     connect_test_error
     disconnect_test
+    list_test_1_lo
 
     cleanup_two_namespace
 }
