@@ -2,7 +2,7 @@
 
 diff() {
     if [ "$2" != "$3" ]; then
-        echo "[-] $1 test failed"
+        echo "[-][FAIL] $1 test"
         echo "Expected:"
         echo "$3"
         echo "Got:"
@@ -10,16 +10,18 @@ diff() {
         exit 1
     fi
 
-    echo "[+] $1 test passed"
+    echo "[+][PASS] $1 test"
 }
 
 setup_two_namespace() {
     ../nsctl ns create test-1
     ../nsctl ns create test-2
     ../nsctl ns list
+    echo
 }
 
 cleanup_two_namespace() {
+    echo
     ../nsctl ns delete test-1
     ../nsctl ns delete test-2
 }

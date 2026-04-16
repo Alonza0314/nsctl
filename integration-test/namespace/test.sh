@@ -2,7 +2,7 @@
 
 diff() {
     if [ "$2" != "$3" ]; then
-        echo "[-] $1 test failed"
+        echo "[-][FAIL] $1 test"
         echo "Expected:"
         echo "$3"
         echo "Got:"
@@ -10,7 +10,7 @@ diff() {
         exit 1
     fi
 
-    echo "[+] $1 test passed"
+    echo "[+][PASS] $1 test"
 }
 
 empty_list() {
