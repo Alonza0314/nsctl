@@ -37,7 +37,7 @@ func List(ns string) (string, error) {
 func printTable(links []netlink.Link) string {
 	var b strings.Builder
 
-	ifWidth, stateWidth, ipWidth, macWidth := 18, 5, 18, 17
+	ifWidth, stateWidth, ipWidth, macWidth := 18, 16, 18, 17
 
 	b.WriteString("┌" + strings.Repeat("─", ifWidth) + "┬" + strings.Repeat("─", stateWidth) + "┬" + strings.Repeat("─", ipWidth) + "┬" + strings.Repeat("─", macWidth) + "┐\n")
 	b.WriteString(fmt.Sprintf("│%-*.*s│%-*.*s│%-*.*s│%-*.*s│\n", ifWidth, ifWidth, "IFACE", stateWidth, stateWidth, "STATE", ipWidth, ipWidth, "IP", macWidth, macWidth, "MAC"))

@@ -66,6 +66,15 @@ func netFunc(cmd *cobra.Command, args []string) {
 			}
 		}
 	case "up":
+		if len(args) != 3 {
+			errFormat(args)
+		} else {
+			if err := veth.Up(args[1], args[2]); err != nil {
+				errPrint(err)
+			} else {
+				fmt.Printf("Interface %s in namespace %s set up successfully\n", args[2], args[1])
+			}
+		}
 	case "down:":
 	default:
 		errInvalidAction(args[0])
