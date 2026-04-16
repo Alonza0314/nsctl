@@ -63,7 +63,7 @@ func printTable(links []netlink.Link) string {
 			ipList := make([]string, 0, len(addrs))
 			for _, addr := range addrs {
 				if addr.IPNet != nil {
-					ipList = append(ipList, addr.IPNet.IP.String())
+					ipList = append(ipList, addr.IP.String())
 				}
 			}
 			if len(ipList) > 0 {
