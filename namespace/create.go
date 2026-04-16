@@ -7,12 +7,12 @@ import (
 )
 
 func Create(name string) error {
-	if found, err := GetNs(name); err != nil {
+	found, err := GetNs(name)
+	if err != nil {
 		return err
-	} else {
-		if found {
-			return fmt.Errorf("namespace %s already exists", name)
-		}
+	}
+	if found {
+		return fmt.Errorf("namespace %s already exists", name)
 	}
 
 	originNs, err := netns.Get()

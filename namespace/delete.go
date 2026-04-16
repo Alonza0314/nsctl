@@ -7,12 +7,12 @@ import (
 )
 
 func Delete(name string) error {
-	if found, err := GetNs(name); err != nil {
+	found, err := GetNs(name)
+	if err != nil {
 		return err
-	} else {
-		if !found {
-			return fmt.Errorf("namespace %s not found", name)
-		}
+	}
+	if !found {
+		return fmt.Errorf("namespace %s not found", name)
 	}
 
 	if err := netns.DeleteNamed(GetNsName(name)); err != nil {
