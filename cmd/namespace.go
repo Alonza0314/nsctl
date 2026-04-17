@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/Alonza0314/nsctl/namespace"
+	"github.com/Alonza0314/nsctl/internal/namespace"
 	"github.com/spf13/cobra"
 )
 

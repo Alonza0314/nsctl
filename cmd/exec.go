@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/Alonza0314/nsctl/nsExec"
+	"github.com/Alonza0314/nsctl/internal/nsExec"
 	"github.com/spf13/cobra"
 )
 

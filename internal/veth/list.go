@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/Alonza0314/nsctl/namespace"
+	"github.com/Alonza0314/nsctl/internal/namespace"
 	"github.com/vishvananda/netlink"
 	"github.com/vishvananda/netns"
 )

@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	"github.com/Alonza0314/nsctl/veth"
+	"github.com/Alonza0314/nsctl/internal/veth"
 	"github.com/spf13/cobra"
 )
 
