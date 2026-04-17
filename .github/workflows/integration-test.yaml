@@ -39,5 +39,8 @@ jobs:
       - name: Veth Net Test
         run: cd integration-test/veth && ./test.sh
 
+      - name: Exec Test
+        run: cd integration-test/exec && ./test.sh
+
       - name: Remove netns Folder
         run: rm -rf /var/run/netns
