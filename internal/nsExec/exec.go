@@ -36,5 +36,6 @@ func Run(ns string, command []string) error {
 
 		}
 	}
+
 	return execErr
 }
