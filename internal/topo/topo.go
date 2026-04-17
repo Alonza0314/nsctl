@@ -5,16 +5,27 @@ import (
 	"net"
 
 	"github.com/Alonza0314/nsctl/internal/namespace"
+	"github.com/pterm/pterm"
 )
 
 func checkTopo(topo *Topology) error {
+	spinner, err := pterm.DefaultSpinner.Start("Checking topology namespaces...")
+	if err != nil {
+		return err
+	}
 	if err := checkTopoNamespace(topo); err != nil {
 		return err
 	}
+	spinner.Success("Topology namespaces check passed")
 
+	spinner, err = pterm.DefaultSpinner.Start("Checking topology networks...")
+	if err != nil {
+		return err
+	}
 	if err := checkTopoNetwork(topo); err != nil {
 		return err
 	}
+	spinner.Success("Topology networks check passed")
 
 	return nil
 }

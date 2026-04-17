@@ -1,12 +1,9 @@
 package topo
 
 import (
-	"errors"
-	"fmt"
-	"strings"
-
 	"github.com/Alonza0314/nsctl/internal/namespace"
 	"github.com/Alonza0314/nsctl/internal/veth"
+	"github.com/pterm/pterm"
 	"github.com/vishvananda/netlink"
 	"github.com/vishvananda/netns"
 )
@@ -17,43 +14,48 @@ func Delete(topo *Topology) error {
 	}
 
 	if err := deleteNamespaces(topo.Namespaces); err != nil {
-		return fmt.Errorf("failed to delete namespaces: %v", err)
+		return err
 	}
 
 	if err := deleteBridges(topo.Networks); err != nil {
-		return fmt.Errorf("failed to delete bridges: %v", err)
+		return err
 	}
 
 	return nil
 }
 
 func deleteNamespaces(nss []Namespace) error {
-	var errBuilder []error
 	for _, ns := range nss {
+		spinner, err := pterm.DefaultSpinner.Start("Deleting namespace " + ns.Name + "...")
+		if err != nil {
+			spinner.Fail("Failed to start spinner for namespace " + ns.Name + ": " + err.Error())
+			continue
+		}
+
 		found, err := namespace.GetNs(ns.Name)
 		if err != nil {
-			errBuilder = append(errBuilder, fmt.Errorf("failed to get namespace %s: %v", ns.Name, err))
+			spinner.Fail("Failed to get namespace " + ns.Name + ": " + err.Error())
 			continue
 		}
 		if !found {
-			errBuilder = append(errBuilder, fmt.Errorf("namespace %s does not exist", ns.Name))
+			spinner.Fail("Namespace " + ns.Name + " does not exist")
 			continue
 		}
 
 		_, originCloseFunc, err := namespace.GetOriginNs()
 		if err != nil {
-			errBuilder = append(errBuilder, fmt.Errorf("failed to get origin namespace file descriptor: %v", err))
+			spinner.Fail("Failed to get origin namespace file descriptor: " + err.Error())
 			continue
 		}
 		nsFd, nsCloseFunc, err := namespace.GetNsFd(ns.Name)
 		if err != nil {
-			errBuilder = append(errBuilder, fmt.Errorf("failed to get namespace %s file descriptor: %v", ns.Name, err))
+			spinner.Fail("Failed to get namespace " + ns.Name + " file descriptor: " + err.Error())
 			originCloseFunc()
 			continue
 		}
 
 		if err := netns.Set(nsFd); err != nil {
-			errBuilder = append(errBuilder, fmt.Errorf("failed to set namespace %s: %v", ns.Name, err))
+			spinner.Fail("Failed to set namespace " + ns.Name + ": " + err.Error())
 			nsCloseFunc()
 			originCloseFunc()
 			continue
@@ -61,17 +63,17 @@ func deleteNamespaces(nss []Namespace) error {
 
 		for _, network := range ns.Networks {
 			if err := veth.UpDown(ns.Name, network.Name, false); err != nil {
-				errBuilder = append(errBuilder, fmt.Errorf("failed to bring down veth for namespace %s and network %s: %v", ns.Name, network.Name, err))
+				spinner.Fail("Failed to bring down veth for namespace " + ns.Name + " and network " + network.Name + ": " + err.Error())
 				continue
 			}
 
 			link, err := netlink.LinkByName(network.Name)
 			if err != nil {
-				errBuilder = append(errBuilder, fmt.Errorf("failed to get link %s in namespace %s: %v", network.Name, ns.Name, err))
+				spinner.Fail("Failed to get link " + network.Name + " in namespace " + ns.Name + ": " + err.Error())
 				continue
 			}
 			if err := netlink.LinkDel(link); err != nil {
-				errBuilder = append(errBuilder, fmt.Errorf("failed to delete link %s in namespace %s: %v", network.Name, ns.Name, err))
+				spinner.Fail("Failed to delete link " + network.Name + " in namespace " + ns.Name + ": " + err.Error())
 			}
 		}
 
@@ -79,39 +81,32 @@ func deleteNamespaces(nss []Namespace) error {
 		originCloseFunc()
 
 		if err := namespace.Delete(ns.Name); err != nil {
-			errBuilder = append(errBuilder, fmt.Errorf("failed to delete namespace %s: %v", ns.Name, err))
+			spinner.Fail("Failed to delete namespace " + ns.Name + ": " + err.Error())
 		}
+		spinner.Success("Namespace " + ns.Name + " deleted")
 	}
 
-	return errBuild(errBuilder)
+	return nil
 }
 
 func deleteBridges(networks []Network) error {
-	var errBuilder []error
 	for _, network := range networks {
+		spinner, err := pterm.DefaultSpinner.Start("Deleting bridge " + network.Name + "...")
+		if err != nil {
+			spinner.Fail("Failed to start spinner for bridge " + network.Name + ": " + err.Error())
+			continue
+		}
+
 		link, err := netlink.LinkByName(network.Name)
 		if err != nil {
-			errBuilder = append(errBuilder, fmt.Errorf("failed to get bridge %s: %v", network.Name, err))
+			spinner.Fail("Failed to get bridge " + network.Name + ": " + err.Error())
 			continue
 		}
 		if err := netlink.LinkDel(link); err != nil {
-			errBuilder = append(errBuilder, fmt.Errorf("failed to delete bridge %s: %v", network.Name, err))
+			spinner.Fail("Failed to delete bridge " + network.Name + ": " + err.Error())
 		}
+		spinner.Success("Bridge " + network.Name + " deleted")
 	}
 
-	return errBuild(errBuilder)
-}
-
-func errBuild(errBuilder []error) error {
-	if len(errBuilder) == 0 {
-		return nil
-	}
-
-	var b strings.Builder
-	b.WriteString("Multiple errors occurred:\n")
-	for _, err := range errBuilder {
-		fmt.Fprintf(&b, "- %v\n", err)
-	}
-
-	return errors.New(b.String())
+	return nil
 }
