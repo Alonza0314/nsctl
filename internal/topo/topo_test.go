@@ -440,7 +440,7 @@ var testCheckTopoCases = []struct {
 func TestCheckTopo(t *testing.T) {
 	for _, tc := range testCheckTopoCases {
 		t.Run(tc.name, func(t *testing.T) {
-			err := checkTopo(tc.topo)
+			_, err := checkTopo(tc.topo)
 			if tc.expectedErr {
 				if err == nil {
 					t.Errorf("expected error but got nil")
@@ -566,27 +566,26 @@ var testTopologicalSortCases = []struct {
 func TestTopologicalSort(t *testing.T) {
 	for _, tc := range testTopologicalSortCases {
 		t.Run(tc.name, func(t *testing.T) {
-			sorted, err := SortNamespacesByDependency(tc.namespaces, tc.reverse)
-			if tc.epectedErr {
-				if err == nil {
-					t.Errorf("expected error but got nil")
-				} else if err.Error() != tc.expectedErrDetail {
-					t.Errorf("expected error detail '%s' but got '%s'", tc.expectedErrDetail, err.Error())
-				}
-			} else {
-				if err != nil {
-					t.Errorf("expected no error but got: %v", err)
+			g, err := existCycle(tc.namespaces)
+			if err != nil {
+				if tc.epectedErr {
+					if err.Error() != tc.expectedErrDetail {
+						t.Errorf("expected error detail '%s' but got '%s'", tc.expectedErrDetail, err.Error())
+					}
 				} else {
-					sortedNames := make([]string, len(sorted))
-					for i, ns := range sorted {
-						sortedNames[i] = ns.Name
-					}
-					for i := range sortedNames {
-						if sortedNames[i] != tc.expectedOrder[i] {
-							t.Errorf("expected order %v but got %v", tc.expectedOrder, sortedNames)
-							break
-						}
-					}
+					t.Errorf("expected no error but got: %v", err)
+				}
+				return
+			}
+			sorted := g.getSortedNamespaces(tc.namespaces, tc.reverse)
+			sortedNames := make([]string, len(sorted))
+			for i, ns := range sorted {
+				sortedNames[i] = ns.Name
+			}
+			for i := range sortedNames {
+				if sortedNames[i] != tc.expectedOrder[i] {
+					t.Errorf("expected order %v but got %v", tc.expectedOrder, sortedNames)
+					break
 				}
 			}
 		})

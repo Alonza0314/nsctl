@@ -8,7 +8,8 @@ import (
 )
 
 func Apply(topo *Topology) error {
-	if err := checkTopo(topo); err != nil {
+	g, err := checkTopo(topo)
+	if err != nil {
 		return err
 	}
 
@@ -20,7 +21,7 @@ func Apply(topo *Topology) error {
 		return err
 	}
 
-	if err := addNamespaces(topo.Namespaces); err != nil {
+	if err := addNamespaces(g.getSortedNamespaces(topo.Namespaces, false)); err != nil {
 		return err
 	}
 

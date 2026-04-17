@@ -9,11 +9,12 @@ import (
 )
 
 func Delete(topo *Topology) error {
-	if err := checkTopo(topo); err != nil {
+	g, err := checkTopo(topo)
+	if err != nil {
 		return err
 	}
 
-	if err := deleteNamespaces(topo.Namespaces); err != nil {
+	if err := deleteNamespaces(g.getSortedNamespaces(topo.Namespaces, true)); err != nil {
 		return err
 	}
 
