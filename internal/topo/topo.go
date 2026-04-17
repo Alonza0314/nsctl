@@ -152,3 +152,84 @@ func checkNamespaceExist(nss []Namespace) error {
 
 	return nil
 }
+
+type graph struct {
+	aTob     map[string][]string
+	inDegree map[string]int
+	index    map[string]int
+}
+
+func newGraph() *graph {
+	return &graph{
+		aTob:     make(map[string][]string),
+		inDegree: make(map[string]int),
+		index:    make(map[string]int),
+	}
+}
+
+func (g *graph) make(nss []Namespace) {
+	for i, ns := range nss {
+		g.aTob[ns.Name], g.inDegree[ns.Name], g.index[ns.Name] = make([]string, 0), 0, i
+	}
+
+	for _, ns := range nss {
+		for _, dep := range ns.DependsOn {
+			g.aTob[dep] = append(g.aTob[dep], ns.Name)
+			g.inDegree[ns.Name] += 1
+		}
+	}
+
+}
+
+func (g *graph) getNeighbors(ns string) []string {
+	return g.aTob[ns]
+}
+
+func (g *graph) topologicalSort() []string {
+	queue := make([]string, 0)
+	for ns, degree := range g.inDegree {
+		if degree == 0 {
+			queue = append(queue, ns)
+		}
+	}
+
+	sorted := make([]string, 0)
+	for len(queue) > 0 {
+		ns := queue[0]
+		queue, sorted = queue[1:], append(sorted, ns)
+
+		for _, neighbor := range g.getNeighbors(ns) {
+			g.inDegree[neighbor] -= 1
+			if g.inDegree[neighbor] == 0 {
+				queue = append(queue, neighbor)
+			}
+		}
+	}
+	return sorted
+}
+
+func (g *graph) getSortedNamespaces(nssName []string, nss []Namespace) []Namespace {
+	nsList := make([]Namespace, len(nss))
+	for i, ns := range nssName {
+		nsList[i] = nss[g.index[ns]]
+	}
+	return nsList
+}
+
+func SortNamespacesByDependency(nss []Namespace, reverse bool) ([]Namespace, error) {
+	g := newGraph()
+	g.make(nss)
+	sortedNames := g.topologicalSort()
+	if len(sortedNames) != len(nss) {
+		return nil, fmt.Errorf("circular dependency detected among namespaces")
+	}
+
+	sortedNamespaces := g.getSortedNamespaces(sortedNames, nss)
+	if reverse {
+		for i, j := 0, len(sortedNamespaces)-1; i < j; i, j = i+1, j-1 {
+			sortedNamespaces[i], sortedNamespaces[j] = sortedNamespaces[j], sortedNamespaces[i]
+		}
+	}
+
+	return sortedNamespaces, nil
+}
