@@ -6,6 +6,8 @@ namespaces:
       - name: br-test-1
         bridge: br-test-1-2
         ipv4: 10.0.0.1/24
+    depends_on:
+      - test-2
 
   - name: test-2
     commands:

@@ -42,7 +42,14 @@ func checkTopoNamespace(topo *Topology) error {
 		if err := checkNamespaceNetwork(&ns); err != nil {
 			return err
 		}
+	}
 
+	for _, ns := range topo.Namespaces {
+		for _, dep := range ns.DependsOn {
+			if _, exists := nsNames[dep]; !exists {
+				return fmt.Errorf("namespace %s depends on non-existent namespace: %s", ns.Name, dep)
+			}
+		}
 	}
 
 	return nil
