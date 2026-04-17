@@ -5,7 +5,7 @@ namespaces:
     networks:
       - name: br-test-1
         bridge: br-test-1-2
-        ipv4: 10.0.0.1
+        ipv4: 10.0.0.1/24
 
   - name: test-2
     commands:
@@ -13,7 +13,7 @@ namespaces:
     networks:
       - name: br-test-2
         bridge: br-test-1-2
-        ipv4: 10.0.0.2
+        ipv4: 10.0.0.2/24
 
 networks:
   - name: br-test-1-2

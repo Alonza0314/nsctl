@@ -3,6 +3,8 @@ package topo
 import (
 	"fmt"
 	"net"
+
+	"github.com/Alonza0314/nsctl/internal/namespace"
 )
 
 func checkTopo(topo *Topology) error {
@@ -99,13 +101,35 @@ func checkTopoNetwork(topo *Topology) error {
 }
 
 func checkSubnet(subnet *net.IPNet, targetIp string) error {
-	ip := net.ParseIP(targetIp)
-	if ip == nil {
+	ip, _, err := net.ParseCIDR(targetIp)
+	if err != nil {
 		return fmt.Errorf("invalid IP address: %s", targetIp)
 	}
 
 	if !subnet.Contains(ip) {
 		return fmt.Errorf("IPv4 address %s is not in subnet %s", targetIp, subnet)
+	}
+
+	return nil
+}
+
+func checkExist(topo *Topology) error {
+	if err := checkNamespaceExist(topo.Namespaces); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func checkNamespaceExist(nss []Namespace) error {
+	for _, ns := range nss {
+		found, err := namespace.GetNs(namespace.GetNsName(ns.Name))
+		if err != nil {
+			return err
+		}
+		if found {
+			return fmt.Errorf("namespace %s already exists", ns.Name)
+		}
 	}
 
 	return nil

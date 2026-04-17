@@ -19,7 +19,7 @@ var testCheckTopoCases = []struct {
 						{
 							Name:   "br-test-1",
 							Bridge: "br-test-1-2",
-							Ipv4:   "10.0.0.1",
+							Ipv4:   "10.0.0.1/24",
 						},
 					},
 				},
@@ -30,7 +30,7 @@ var testCheckTopoCases = []struct {
 						{
 							Name:   "br-test-2",
 							Bridge: "br-test-1-2",
-							Ipv4:   "10.0.0.2",
+							Ipv4:   "10.0.0.2/24",
 						},
 					},
 				},
@@ -56,7 +56,7 @@ var testCheckTopoCases = []struct {
 						{
 							Name:   "br-test-1",
 							Bridge: "br-test-1-2",
-							Ipv4:   "10.0.0.1",
+							Ipv4:   "10.0.0.1/24",
 						},
 					},
 				},
@@ -67,7 +67,7 @@ var testCheckTopoCases = []struct {
 						{
 							Name:   "br-test-2",
 							Bridge: "br-test-1-2",
-							Ipv4:   "10.0.0.2",
+							Ipv4:   "10.0.0.2/24",
 						},
 					},
 				},
@@ -93,12 +93,12 @@ var testCheckTopoCases = []struct {
 						{
 							Name:   "br-test-1",
 							Bridge: "br-test-1-2",
-							Ipv4:   "10.0.0.1",
+							Ipv4:   "10.0.0.1/24",
 						},
 						{
 							Name:   "br-test-1",
 							Bridge: "br-test-1-2",
-							Ipv4:   "10.0.0.3",
+							Ipv4:   "10.0.0.3/24",
 						},
 					},
 				},
@@ -109,7 +109,7 @@ var testCheckTopoCases = []struct {
 						{
 							Name:   "br-test-2",
 							Bridge: "br-test-1-2",
-							Ipv4:   "10.0.0.2",
+							Ipv4:   "10.0.0.2/24",
 						},
 					},
 				},
@@ -135,12 +135,12 @@ var testCheckTopoCases = []struct {
 						{
 							Name:   "br-test-1",
 							Bridge: "br-test-1-2",
-							Ipv4:   "10.0.0.1",
+							Ipv4:   "10.0.0.1/24",
 						},
 						{
 							Name:   "br-test-3",
 							Bridge: "br-test-1-2",
-							Ipv4:   "10.0.0.1",
+							Ipv4:   "10.0.0.1/24",
 						},
 					},
 				},
@@ -151,7 +151,7 @@ var testCheckTopoCases = []struct {
 						{
 							Name:   "br-test-2",
 							Bridge: "br-test-1-2",
-							Ipv4:   "10.0.0.2",
+							Ipv4:   "10.0.0.2/24",
 						},
 					},
 				},
@@ -164,7 +164,7 @@ var testCheckTopoCases = []struct {
 			},
 		},
 		expectedErr:       true,
-		expectedErrDetail: "duplicate IP address in namespace test-1: 10.0.0.1",
+		expectedErrDetail: "duplicate IP address in namespace test-1: 10.0.0.1/24",
 	},
 	{
 		name: "duplicate network name",
@@ -177,7 +177,7 @@ var testCheckTopoCases = []struct {
 						{
 							Name:   "br-test-1",
 							Bridge: "br-test-1-2",
-							Ipv4:   "10.0.0.1",
+							Ipv4:   "10.0.0.1/24",
 						},
 					},
 				},
@@ -188,7 +188,7 @@ var testCheckTopoCases = []struct {
 						{
 							Name:   "br-test-2",
 							Bridge: "br-test-1-2",
-							Ipv4:   "10.0.0.2",
+							Ipv4:   "10.0.0.2/24",
 						},
 					},
 				},
@@ -218,7 +218,7 @@ var testCheckTopoCases = []struct {
 						{
 							Name:   "br-test-1",
 							Bridge: "br-test-1-2",
-							Ipv4:   "10.0.0.1",
+							Ipv4:   "10.0.0.1/24",
 						},
 					},
 				},
@@ -229,7 +229,7 @@ var testCheckTopoCases = []struct {
 						{
 							Name:   "br-test-2",
 							Bridge: "br-test-1-2",
-							Ipv4:   "10.0.0.2",
+							Ipv4:   "10.0.0.2/24",
 						},
 					},
 				},
@@ -255,7 +255,7 @@ var testCheckTopoCases = []struct {
 						{
 							Name:   "br-test-1",
 							Bridge: "br-test-1-2",
-							Ipv4:   "10.0.0.1",
+							Ipv4:   "10.0.0.1/24",
 						},
 					},
 				},
@@ -266,7 +266,7 @@ var testCheckTopoCases = []struct {
 						{
 							Name:   "br-test-2",
 							Bridge: "br-test-1-2",
-							Ipv4:   "10.0.0.2",
+							Ipv4:   "10.0.0.2/24",
 						},
 					},
 				},
@@ -296,7 +296,7 @@ var testCheckTopoCases = []struct {
 						{
 							Name:   "br-test-1",
 							Bridge: "br-test-1-2",
-							Ipv4:   "10.0.0.1",
+							Ipv4:   "10.0.0.1/24",
 						},
 					},
 				},
@@ -307,7 +307,7 @@ var testCheckTopoCases = []struct {
 						{
 							Name:   "br-test-2",
 							Bridge: "br-test-1-2",
-							Ipv4:   "10.0.0.1",
+							Ipv4:   "10.0.0.1/24",
 						},
 					},
 				},
@@ -320,7 +320,7 @@ var testCheckTopoCases = []struct {
 			},
 		},
 		expectedErr:       true,
-		expectedErrDetail: "duplicate IP address 10.0.0.1 for bridge br-test-1-2",
+		expectedErrDetail: "duplicate IP address 10.0.0.1/24 for bridge br-test-1-2",
 	},
 	{
 		name: "invalid subnet for network bridge",
@@ -333,7 +333,7 @@ var testCheckTopoCases = []struct {
 						{
 							Name:   "br-test-1",
 							Bridge: "br-test-1-2",
-							Ipv4:   "10.0.1.1",
+							Ipv4:   "10.0.1.1/24",
 						},
 					},
 				},
@@ -344,7 +344,7 @@ var testCheckTopoCases = []struct {
 						{
 							Name:   "br-test-2",
 							Bridge: "br-test-1-2",
-							Ipv4:   "10.0.0.2",
+							Ipv4:   "10.0.0.2/24",
 						},
 					},
 				},
@@ -357,7 +357,7 @@ var testCheckTopoCases = []struct {
 			},
 		},
 		expectedErr:       true,
-		expectedErrDetail: "invalid IP address 10.0.1.1 for bridge br-test-1-2: IPv4 address 10.0.1.1 is not in subnet 10.0.0.0/24",
+		expectedErrDetail: "invalid IP address 10.0.1.1/24 for bridge br-test-1-2: IPv4 address 10.0.1.1/24 is not in subnet 10.0.0.0/24",
 	},
 	{
 		name: "invalid IP address",
@@ -370,7 +370,7 @@ var testCheckTopoCases = []struct {
 						{
 							Name:   "br-test-1",
 							Bridge: "br-test-1-2",
-							Ipv4:   "10.0.0.999",
+							Ipv4:   "10.0.0.999/24",
 						},
 					},
 				},
@@ -381,7 +381,7 @@ var testCheckTopoCases = []struct {
 						{
 							Name:   "br-test-2",
 							Bridge: "br-test-1-2",
-							Ipv4:   "10.0.0.2",
+							Ipv4:   "10.0.0.2/24",
 						},
 					},
 				},
@@ -394,7 +394,7 @@ var testCheckTopoCases = []struct {
 			},
 		},
 		expectedErr:       true,
-		expectedErrDetail: "invalid IP address 10.0.0.999 for bridge br-test-1-2: invalid IP address: 10.0.0.999",
+		expectedErrDetail: "invalid IP address 10.0.0.999/24 for bridge br-test-1-2: invalid IP address: 10.0.0.999/24",
 	},
 }
 
