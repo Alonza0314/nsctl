@@ -41,6 +41,11 @@ func topoFunc(cmd *cobra.Command, args []string) {
 			fmt.Printf("Topology applied successfully from file: %s\n", args[1])
 		}
 	case "delete":
+		if err := topo.Delete(&topoStruct); err != nil {
+			errPrint(err)
+		} else {
+			fmt.Printf("Topology deleted successfully from file: %s\n", args[1])
+		}
 	default:
 		errFormat(args)
 	}

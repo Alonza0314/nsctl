@@ -58,9 +58,17 @@ exec_ping_test() {
     assert_match "Exec ping rtt stats" "$output" '^rtt min/avg/max/mdev = [0-9.]+/[0-9.]+/[0-9.]+/[0-9.]+ ms$'
 }
 
+topo_delete() {
+    output=$(../nsctl topo delete topo_template.yaml)
+    expect=$(cat topo_delete.txt)
+
+    diff "Topo delete" "$output" "$expect"
+}
+
 main() {
     topo_apply
     exec_ping_test
+    topo_delete
 }
 
 main "$@"
