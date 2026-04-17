@@ -1,0 +1,20 @@
+namespaces:
+  - name: test-1
+    commands:
+      - ls
+    networks:
+      - name: br-test-1
+        bridge: br-test-1-2
+        ipv4: 10.0.0.1
+
+  - name: test-2
+    commands:
+      - ls
+    networks:
+      - name: br-test-2
+        bridge: br-test-1-2
+        ipv4: 10.0.0.2
+
+networks:
+  - name: br-test-1-2
+    subnet: 10.0.0.0/24

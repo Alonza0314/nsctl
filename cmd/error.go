@@ -25,3 +25,13 @@ func errPrint(err error) {
 	fmt.Printf("Error: %v\n", err)
 	os.Exit(1)
 }
+
+func errFileNotExist(file string) {
+	fmt.Printf("File '%s' does not exist\n", file)
+	os.Exit(1)
+}
+
+func errYamlFormat(file string, err error) {
+	fmt.Printf("Error parsing YAML file '%s': %v\n", file, err)
+	os.Exit(1)
+}
