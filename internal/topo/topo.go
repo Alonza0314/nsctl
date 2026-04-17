@@ -15,6 +15,7 @@ func checkTopo(topo *Topology) (*graph, error) {
 	}
 	g, err := checkTopoNamespace(topo)
 	if err != nil {
+		spinner.Fail("Topology namespaces check failed: " + err.Error())
 		return nil, err
 	}
 	spinner.Success("Topology namespaces check passed")
@@ -24,6 +25,7 @@ func checkTopo(topo *Topology) (*graph, error) {
 		return nil, err
 	}
 	if err := checkTopoNetwork(topo); err != nil {
+		spinner.Fail("Topology networks check failed: " + err.Error())
 		return nil, err
 	}
 	spinner.Success("Topology networks check passed")
