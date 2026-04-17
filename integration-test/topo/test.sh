@@ -43,7 +43,7 @@ assert_count() {
 }
 
 topo_apply_cycle() {
-    output=$(../nsctl topo cycle topo_template_deps_cycle.yaml)
+    output=$(../nsctl topo apply topo_template_deps_cycle.yaml)
     expect=$(cat topo_apply_cycle.txt)
 
     diff "Topo apply cycle" "$output" "$expect"
