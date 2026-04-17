@@ -42,6 +42,13 @@ assert_count() {
     echo "[+][PASS] $1"
 }
 
+topo_apply_cycle() {
+    output=$(../nsctl topo apply topo_template_deps_cycle.yaml)
+    expect=""
+
+    diff "Topo apply cycle" "$output" "$expect"
+}
+
 topo_apply() {
     output=$(../nsctl topo apply topo_template.yaml)
     expect=$(cat topo_apply.txt)
@@ -66,6 +73,7 @@ topo_delete() {
 }
 
 main() {
+    topo_apply_cycle
     topo_apply
     exec_ping_test
     topo_delete
