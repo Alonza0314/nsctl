@@ -97,7 +97,6 @@ func addVethPair(ns Namespace) error {
 		if err != nil {
 			return err
 		}
-		defer nsCloseFunc()
 
 		if err := netlink.LinkSetNsFd(vethNs, int(nsFd)); err != nil {
 			return err
@@ -110,6 +109,8 @@ func addVethPair(ns Namespace) error {
 		if err := veth.UpDown(ns.Name, network.Name, true); err != nil {
 			return err
 		}
+		
+		nsCloseFunc()
 	}
 
 	return nil
