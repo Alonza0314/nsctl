@@ -64,3 +64,5 @@ After built, the binary file, `nsctl`, will be placed in the `build` directory.
     | -------------------------- | ----------------------------- |
     | `nsctl topo apply <file>`  | Apply a topology from a file  |
     | `nsctl topo delete <file>` | Delete a topology from a file |
+
+    The topology template file could be found at [YALM](./example/basicTopo/).

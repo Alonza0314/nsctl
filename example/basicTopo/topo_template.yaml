@@ -1,0 +1,18 @@
+namespaces:
+  - name: ns-1
+    networks:
+      - name: br-ns-1
+        bridge: br-ns-1-2
+        ipv4: 10.0.0.1/24
+    depends_on:
+      - ns-2
+
+  - name: ns-2
+    networks:
+      - name: br-ns-2
+        bridge: br-ns-1-2
+        ipv4: 10.0.0.2/24
+
+networks:
+  - name: br-ns-1-2
+    subnet: 10.0.0.0/24
