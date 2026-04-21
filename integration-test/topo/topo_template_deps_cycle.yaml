@@ -1,7 +1,5 @@
 namespaces:
   - name: test-1
-    commands:
-      - ls
     networks:
       - name: br-test-1
         bridge: br-test-1-2
@@ -10,8 +8,6 @@ namespaces:
       - test-2
 
   - name: test-2
-    commands:
-      - ls
     networks:
       - name: br-test-2
         bridge: br-test-1-2
