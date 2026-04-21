@@ -58,12 +58,6 @@ After built, the binary file, `nsctl`, will be placed in the `build` directory.
     | -------------------------- | -------------------------------- |
     | `nsctl exec <ns> -- <cmd>` | Execute a command in a namespace |
 
-- `describe` series
-
-    | Command               | Description          |
-    | --------------------- | -------------------- |
-    | `nsctl describe <ns>` | Describe a namespace |
-
 - `topo` series
 
     | Command                    | Description                   |
