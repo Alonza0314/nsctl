@@ -8,44 +8,59 @@ import (
 	"github.com/pterm/pterm"
 )
 
-func checkTopo(topo *Topology) error {
+func checkTopo(topo *Topology) (*graph, error) {
 	spinner, err := pterm.DefaultSpinner.Start("Checking topology namespaces...")
 	if err != nil {
-		return err
+		return nil, err
 	}
-	if err := checkTopoNamespace(topo); err != nil {
-		return err
+	g, err := checkTopoNamespace(topo)
+	if err != nil {
+		spinner.Fail("Topology namespaces check failed: " + err.Error())
+		return nil, err
 	}
 	spinner.Success("Topology namespaces check passed")
 
 	spinner, err = pterm.DefaultSpinner.Start("Checking topology networks...")
 	if err != nil {
-		return err
+		return nil, err
 	}
 	if err := checkTopoNetwork(topo); err != nil {
-		return err
+		spinner.Fail("Topology networks check failed: " + err.Error())
+		return nil, err
 	}
 	spinner.Success("Topology networks check passed")
 
-	return nil
+	return g, nil
 }
 
-func checkTopoNamespace(topo *Topology) error {
+func checkTopoNamespace(topo *Topology) (*graph, error) {
 	nsNames := make(map[string]struct{})
 
 	for _, ns := range topo.Namespaces {
 		if _, exists := nsNames[ns.Name]; exists {
-			return fmt.Errorf("duplicate namespace name: %s", ns.Name)
+			return nil, fmt.Errorf("duplicate namespace name: %s", ns.Name)
 		}
 		nsNames[ns.Name] = struct{}{}
 
 		if err := checkNamespaceNetwork(&ns); err != nil {
-			return err
+			return nil, err
 		}
-
 	}
 
-	return nil
+	for _, ns := range topo.Namespaces {
+		for _, dep := range ns.DependsOn {
+			if _, exists := nsNames[dep]; !exists {
+				return nil, fmt.Errorf("namespace %s depends on non-existent namespace: %s", ns.Name, dep)
+			}
+		}
+	}
+
+	g, err := existCycle(topo.Namespaces)
+	if err != nil {
+		return nil, err
+	}
+
+	return g, nil
 }
 
 func checkNamespaceNetwork(ns *Namespace) error {
@@ -144,4 +159,89 @@ func checkNamespaceExist(nss []Namespace) error {
 	}
 
 	return nil
+}
+
+type graph struct {
+	aTob     map[string][]string
+	inDegree map[string]int
+	index    map[string]int
+	sorted   []string
+}
+
+func newGraph() *graph {
+	return &graph{
+		aTob:     make(map[string][]string),
+		inDegree: make(map[string]int),
+		index:    make(map[string]int),
+		sorted:   nil,
+	}
+}
+
+func (g *graph) make(nss []Namespace) {
+	for i, ns := range nss {
+		g.aTob[ns.Name], g.inDegree[ns.Name], g.index[ns.Name] = make([]string, 0), 0, i
+	}
+
+	for _, ns := range nss {
+		for _, dep := range ns.DependsOn {
+			g.aTob[dep] = append(g.aTob[dep], ns.Name)
+			g.inDegree[ns.Name] += 1
+		}
+	}
+
+}
+
+func (g *graph) getNeighbors(ns string) []string {
+	return g.aTob[ns]
+}
+
+func (g *graph) topologicalSort() {
+	queue := make([]string, 0)
+	for ns, degree := range g.inDegree {
+		if degree == 0 {
+			queue = append(queue, ns)
+		}
+	}
+
+	sorted := make([]string, 0)
+	for len(queue) > 0 {
+		ns := queue[0]
+		queue, sorted = queue[1:], append(sorted, ns)
+
+		for _, neighbor := range g.getNeighbors(ns) {
+			g.inDegree[neighbor] -= 1
+			if g.inDegree[neighbor] == 0 {
+				queue = append(queue, neighbor)
+			}
+		}
+	}
+
+	g.sorted = sorted
+}
+
+func (g *graph) getSortedNamespaces(nss []Namespace, reverse bool) []Namespace {
+	nsList := make([]Namespace, len(nss))
+	for i, ns := range g.sorted {
+		nsList[i] = nss[g.index[ns]]
+	}
+
+	if reverse {
+		for i, j := 0, len(nsList)-1; i < j; i, j = i+1, j-1 {
+			nsList[i], nsList[j] = nsList[j], nsList[i]
+		}
+	}
+
+	return nsList
+}
+
+func existCycle(nss []Namespace) (*graph, error) {
+	g := newGraph()
+	g.make(nss)
+
+	g.topologicalSort()
+	if len(g.sorted) != len(nss) {
+		return nil, fmt.Errorf("circular dependency detected among namespaces")
+	}
+
+	return g, nil
 }
