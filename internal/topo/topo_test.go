@@ -14,7 +14,6 @@ var testCheckTopoCases = []struct {
 			Namespaces: []Namespace{
 				{
 					Name:     "test-1",
-					Commands: []string{"echo"},
 					Networks: []Net{
 						{
 							Name:   "br-test-1",
@@ -26,7 +25,6 @@ var testCheckTopoCases = []struct {
 				},
 				{
 					Name:     "test-2",
-					Commands: []string{"echo"},
 					Networks: []Net{
 						{
 							Name:   "br-test-2",
@@ -52,7 +50,6 @@ var testCheckTopoCases = []struct {
 			Namespaces: []Namespace{
 				{
 					Name:     "test-1",
-					Commands: []string{"echo"},
 					Networks: []Net{
 						{
 							Name:   "br-test-1",
@@ -63,7 +60,6 @@ var testCheckTopoCases = []struct {
 				},
 				{
 					Name:     "test-1",
-					Commands: []string{"echo"},
 					Networks: []Net{
 						{
 							Name:   "br-test-2",
@@ -89,7 +85,6 @@ var testCheckTopoCases = []struct {
 			Namespaces: []Namespace{
 				{
 					Name:     "test-1",
-					Commands: []string{"echo"},
 					Networks: []Net{
 						{
 							Name:   "br-test-1",
@@ -105,7 +100,6 @@ var testCheckTopoCases = []struct {
 				},
 				{
 					Name:     "test-2",
-					Commands: []string{"echo"},
 					Networks: []Net{
 						{
 							Name:   "br-test-2",
@@ -131,7 +125,6 @@ var testCheckTopoCases = []struct {
 			Namespaces: []Namespace{
 				{
 					Name:     "test-1",
-					Commands: []string{"echo"},
 					Networks: []Net{
 						{
 							Name:   "br-test-1",
@@ -147,7 +140,6 @@ var testCheckTopoCases = []struct {
 				},
 				{
 					Name:     "test-2",
-					Commands: []string{"echo"},
 					Networks: []Net{
 						{
 							Name:   "br-test-2",
@@ -173,7 +165,6 @@ var testCheckTopoCases = []struct {
 			Namespaces: []Namespace{
 				{
 					Name:     "test-1",
-					Commands: []string{"echo"},
 					Networks: []Net{
 						{
 							Name:   "br-test-1",
@@ -184,7 +175,6 @@ var testCheckTopoCases = []struct {
 				},
 				{
 					Name:     "test-2",
-					Commands: []string{"echo"},
 					Networks: []Net{
 						{
 							Name:   "br-test-2",
@@ -214,7 +204,6 @@ var testCheckTopoCases = []struct {
 			Namespaces: []Namespace{
 				{
 					Name:     "test-1",
-					Commands: []string{"echo"},
 					Networks: []Net{
 						{
 							Name:   "br-test-1",
@@ -225,7 +214,6 @@ var testCheckTopoCases = []struct {
 				},
 				{
 					Name:     "test-2",
-					Commands: []string{"echo"},
 					Networks: []Net{
 						{
 							Name:   "br-test-2",
@@ -251,7 +239,6 @@ var testCheckTopoCases = []struct {
 			Namespaces: []Namespace{
 				{
 					Name:     "test-1",
-					Commands: []string{"echo"},
 					Networks: []Net{
 						{
 							Name:   "br-test-1",
@@ -262,7 +249,6 @@ var testCheckTopoCases = []struct {
 				},
 				{
 					Name:     "test-2",
-					Commands: []string{"echo"},
 					Networks: []Net{
 						{
 							Name:   "br-test-2",
@@ -292,7 +278,6 @@ var testCheckTopoCases = []struct {
 			Namespaces: []Namespace{
 				{
 					Name:     "test-1",
-					Commands: []string{"echo"},
 					Networks: []Net{
 						{
 							Name:   "br-test-1",
@@ -303,7 +288,6 @@ var testCheckTopoCases = []struct {
 				},
 				{
 					Name:     "test-2",
-					Commands: []string{"echo"},
 					Networks: []Net{
 						{
 							Name:   "br-test-2",
@@ -329,7 +313,6 @@ var testCheckTopoCases = []struct {
 			Namespaces: []Namespace{
 				{
 					Name:     "test-1",
-					Commands: []string{"echo"},
 					Networks: []Net{
 						{
 							Name:   "br-test-1",
@@ -340,7 +323,6 @@ var testCheckTopoCases = []struct {
 				},
 				{
 					Name:     "test-2",
-					Commands: []string{"echo"},
 					Networks: []Net{
 						{
 							Name:   "br-test-2",
@@ -366,7 +348,6 @@ var testCheckTopoCases = []struct {
 			Namespaces: []Namespace{
 				{
 					Name:     "test-1",
-					Commands: []string{"echo"},
 					Networks: []Net{
 						{
 							Name:   "br-test-1",
@@ -377,7 +358,6 @@ var testCheckTopoCases = []struct {
 				},
 				{
 					Name:     "test-2",
-					Commands: []string{"echo"},
 					Networks: []Net{
 						{
 							Name:   "br-test-2",
@@ -403,7 +383,6 @@ var testCheckTopoCases = []struct {
 			Namespaces: []Namespace{
 				{
 					Name:     "test-1",
-					Commands: []string{"echo"},
 					Networks: []Net{
 						{
 							Name:   "br-test-1",
@@ -415,7 +394,6 @@ var testCheckTopoCases = []struct {
 				},
 				{
 					Name:     "test-2",
-					Commands: []string{"echo"},
 					Networks: []Net{
 						{
 							Name:   "br-test-2",
@@ -469,7 +447,6 @@ var testTopologicalSortCases = []struct {
 		namespaces: []Namespace{
 			{
 				Name:     "test-1",
-				Commands: []string{"echo"},
 				Networks: []Net{
 					{
 						Name:   "br-test-1",
@@ -481,7 +458,6 @@ var testTopologicalSortCases = []struct {
 			},
 			{
 				Name:     "test-2",
-				Commands: []string{"echo"},
 				Networks: []Net{
 					{
 						Name:   "br-test-2",
@@ -501,7 +477,6 @@ var testTopologicalSortCases = []struct {
 		namespaces: []Namespace{
 			{
 				Name:     "test-1",
-				Commands: []string{"echo"},
 				Networks: []Net{
 					{
 						Name:   "br-test-1",
@@ -513,7 +488,6 @@ var testTopologicalSortCases = []struct {
 			},
 			{
 				Name:     "test-2",
-				Commands: []string{"echo"},
 				Networks: []Net{
 					{
 						Name:   "br-test-2",
@@ -533,7 +507,6 @@ var testTopologicalSortCases = []struct {
 		namespaces: []Namespace{
 			{
 				Name:     "test-1",
-				Commands: []string{"echo"},
 				Networks: []Net{
 					{
 						Name:   "br-test-1",
@@ -545,7 +518,6 @@ var testTopologicalSortCases = []struct {
 			},
 			{
 				Name:     "test-2",
-				Commands: []string{"echo"},
 				Networks: []Net{
 					{
 						Name:   "br-test-2",

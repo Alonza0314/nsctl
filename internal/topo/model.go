@@ -7,7 +7,6 @@ type Topology struct {
 
 type Namespace struct {
 	Name     string   `yaml:"name" validate:"required"`
-	Commands []string `yaml:"commands"`
 	Networks []Net    `yaml:"networks"`
 	DependsOn []string `yaml:"depends_on"`
 }
