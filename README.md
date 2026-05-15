@@ -31,6 +31,22 @@ make
 
 After built, the binary file, `nsctl`, will be placed in the `build` directory.
 
+### Install & Uninstall
+
+This will help to run directly in terminal.
+
+- Install
+
+    ```bash
+    sudo make install
+    ```
+
+- Uninstall
+
+    ```bash
+    sudo make uninstall
+    ```
+
 ## Command Description
 
 - `ns` series

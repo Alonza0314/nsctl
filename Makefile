@@ -1,4 +1,4 @@
-.PHONY: bin clean test
+.PHONY: bin clean test install uninstall
 
 .DEFAULT_COAL: bin
 
@@ -11,3 +11,9 @@ clean:
 test:
 	go build -o build/nsctl main.go
 	cp build/nsctl integration-test/nsctl
+
+install:
+	mv build/nsctl /usr/bin/nsctl
+
+uninstall:
+	rm /usr/bin/nsctl
