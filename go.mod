@@ -1,9 +1,9 @@
 module github.com/Alonza0314/nsctl
 
-go 1.25.5
+go 1.26.2
 
 require (
-	github.com/free-ran-ue/util v0.0.3
+	github.com/free-ran-ue/util v0.0.4
 	github.com/pterm/pterm v0.12.83
 	github.com/spf13/cobra v1.10.2
 	github.com/vishvananda/netlink v1.3.1
@@ -21,11 +21,11 @@ require (
 	github.com/clipperhouse/uax29/v2 v2.7.0 // indirect
 	github.com/cloudwego/base64x v0.1.6 // indirect
 	github.com/containerd/console v1.0.5 // indirect
-	github.com/free-ran-ue/free-ran-ue/v2 v2.3.11 // indirect
-	github.com/free5gc/aper v1.1.0 // indirect
-	github.com/free5gc/nas v1.2.2 // indirect
-	github.com/free5gc/ngap v1.1.2 // indirect
-	github.com/free5gc/openapi v1.2.3 // indirect
+	github.com/free-ran-ue/free-ran-ue/v2 v2.3.12 // indirect
+	github.com/free5gc/aper v1.1.1 // indirect
+	github.com/free5gc/nas v1.2.3 // indirect
+	github.com/free5gc/ngap v1.1.3 // indirect
+	github.com/free5gc/openapi v1.2.4 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.12 // indirect
 	github.com/gin-contrib/sse v1.1.0 // indirect
 	github.com/gin-gonic/gin v1.12.0 // indirect
